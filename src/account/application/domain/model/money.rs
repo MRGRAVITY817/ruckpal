@@ -1,4 +1,29 @@
-use std::ops::AddAssign;
+use std::ops::{Add, Sub};
+
+#[derive(Clone, Copy)]
+pub struct Money(pub i64);
+
+impl Money {
+    pub fn is_positive(&self) -> bool {
+        self.0.is_positive()
+    }
+}
+
+impl Add for Money {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self(self.0 + rhs.0)
+    }
+}
+
+impl Sub for Money {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self(self.0 - rhs.0)
+    }
+}
 
 // package io.reflectoring.buckpal.application.domain.model;
 //
@@ -60,10 +85,3 @@ use std::ops::AddAssign;
 // 	}
 //
 // }
-pub struct Money(i64);
-
-impl AddAssign for Money {
-    fn add_assign(&mut self, other: Self) {
-        *self = Self(self.0 + other.0);
-    }
-}
