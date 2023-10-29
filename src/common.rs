@@ -1,3 +1,2 @@
-use std::error::Error;
-
-pub type AppResult<T> = Result<T, Box<dyn Error>>;
+pub mod impl_trait;
+pub mod result;

@@ -9,12 +9,13 @@ use crate::{
             update_account_state_port::UpdateAccountStatePort,
         },
     },
-    common::AppResult,
+    common::result::AppResult,
+    impl_t,
 };
 
 pub struct SendMoneyService {
-    load_account_port: Box<dyn LoadAccountPort>,
-    update_account_port: Box<dyn UpdateAccountStatePort>,
+    load_account_port: impl_t!(LoadAccountPort),
+    update_account_port: impl_t!(UpdateAccountStatePort),
 }
 
 impl SendMoneyUseCase for SendMoneyService {

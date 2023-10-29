@@ -1,5 +1,5 @@
 use super::send_money_command::SendMoneyCommand;
-use crate::common::AppResult;
+use crate::common::result::AppResult;
 
 // What does use-case do?
 //  1. Take the input.

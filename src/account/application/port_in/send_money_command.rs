@@ -1,6 +1,6 @@
 use crate::{
     account::application::domain::model::{account::AccountId, money::Money},
-    common::AppResult,
+    common::result::AppResult,
 };
 
 pub struct SendMoneyCommand {
