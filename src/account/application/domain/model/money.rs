@@ -1,8 +1,8 @@
-use crate::common::result::AppResult;
+use serde::Serialize;
 use std::ops::{Add, Sub};
 use validator::ValidationError;
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Serialize)]
 pub struct Money(pub i64);
 
 impl Money {
@@ -27,7 +27,7 @@ impl Sub for Money {
     }
 }
 
-pub fn is_money_positive(money: Money) -> AppResult<()> {
+pub fn is_money_positive(money: &Money) -> Result<(), ValidationError> {
     if !money.is_positive() {
         return Err(
             ValidationError::new("amount of money isn't positive").into()

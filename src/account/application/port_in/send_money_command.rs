@@ -5,7 +5,7 @@ use crate::{
     },
     common::result::AppResult,
 };
-use validator::{Validate, ValidationError};
+use validator::Validate;
 
 #[derive(Validate)]
 pub struct SendMoneyCommand {
@@ -23,15 +23,15 @@ impl SendMoneyCommand {
         target_account_id: AccountId,
         money: Money,
     ) -> AppResult<Self> {
-        if !money.is_positive() {
-            return Err("cannot send negative amount of money".into());
-        }
-
-        Ok(Self {
+        let cmd = Self {
             source_account_id,
             target_account_id,
             money,
-        })
+        };
+
+        cmd.validate()
+            .or_else(|e| Err(e.into()))
+            .and_then(|_| Ok(cmd))
     }
 
     pub fn source_account_id(&self) -> AccountId {
@@ -42,21 +42,3 @@ impl SendMoneyCommand {
         self.target_account_id
     }
 }
-
-// public record SendMoneyCommand(
-//         @NotNull AccountId sourceAccountId,
-//         @NotNull AccountId targetAccountId,
-//         @NotNull @PositiveMoney Money money
-// ) {
-//
-//     public SendMoneyCommand(
-//             AccountId sourceAccountId,
-//             AccountId targetAccountId,
-//             Money money) {
-//         this.sourceAccountId = sourceAccountId;
-//         this.targetAccountId = targetAccountId;
-//         this.money = money;
-//         validate(this);
-//     }
-//
-// }
