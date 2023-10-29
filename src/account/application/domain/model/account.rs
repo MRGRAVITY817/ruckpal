@@ -1,4 +1,6 @@
-use super::{activity::Activity, activity_window::ActivityWindow, money::Money};
+use super::{
+    activity::Activity, activity_window::ActivityWindow, money::Money,
+};
 use chrono::Local;
 
 pub struct Account {
@@ -8,7 +10,11 @@ pub struct Account {
 }
 
 impl Account {
-    pub fn new(id: AccountId, base_line_balance: Money, activity_window: ActivityWindow) -> Self {
+    pub fn new(
+        id: AccountId,
+        base_line_balance: Money,
+        activity_window: ActivityWindow,
+    ) -> Self {
         Self {
             id,
             base_line_balance,
@@ -27,7 +33,13 @@ impl Account {
             return self;
         }
 
-        let withdrawal = Activity::new(self.id, self.id, target_account_id, Local::now(), money);
+        let withdrawal = Activity::new(
+            self.id,
+            self.id,
+            target_account_id,
+            Local::now(),
+            money,
+        );
         let activity_window = self.activity_window.add_activity(withdrawal);
 
         Self::new(self.id, self.base_line_balance, activity_window)
@@ -35,7 +47,13 @@ impl Account {
 
     /// Deposit money from source account to current account.
     pub fn deposit(self, money: Money, source_account_id: AccountId) -> Self {
-        let deposit = Activity::new(self.id, source_account_id, self.id, Local::now(), money);
+        let deposit = Activity::new(
+            self.id,
+            source_account_id,
+            self.id,
+            Local::now(),
+            money,
+        );
         let activity_window = self.activity_window.add_activity(deposit);
 
         Self::new(self.id, self.base_line_balance, activity_window)

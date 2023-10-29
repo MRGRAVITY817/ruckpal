@@ -1,4 +1,6 @@
+use crate::common::result::AppResult;
 use std::ops::{Add, Sub};
+use validator::ValidationError;
 
 #[derive(Clone, Copy)]
 pub struct Money(pub i64);
@@ -23,6 +25,16 @@ impl Sub for Money {
     fn sub(self, rhs: Self) -> Self::Output {
         Self(self.0 - rhs.0)
     }
+}
+
+pub fn is_money_positive(money: Money) -> AppResult<()> {
+    if !money.is_positive() {
+        return Err(
+            ValidationError::new("amount of money isn't positive").into()
+        );
+    }
+
+    Ok(())
 }
 
 // package io.reflectoring.buckpal.application.domain.model;

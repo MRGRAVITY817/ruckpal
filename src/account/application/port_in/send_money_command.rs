@@ -1,11 +1,19 @@
 use crate::{
-    account::application::domain::model::{account::AccountId, money::Money},
+    account::application::domain::model::{
+        account::AccountId,
+        money::{is_money_positive, Money},
+    },
     common::result::AppResult,
 };
+use validator::{Validate, ValidationError};
 
+#[derive(Validate)]
 pub struct SendMoneyCommand {
     source_account_id: AccountId,
+
     target_account_id: AccountId,
+
+    #[validate(custom = "is_money_positive")]
     money: Money,
 }
 
@@ -24,6 +32,14 @@ impl SendMoneyCommand {
             target_account_id,
             money,
         })
+    }
+
+    pub fn source_account_id(&self) -> AccountId {
+        self.source_account_id
+    }
+
+    pub fn target_account_id(&self) -> AccountId {
+        self.target_account_id
     }
 }
 

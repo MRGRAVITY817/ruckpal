@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! impl_t {
+macro_rules! inject {
     ($name: ident) => {
         Box<dyn $name>
     };
