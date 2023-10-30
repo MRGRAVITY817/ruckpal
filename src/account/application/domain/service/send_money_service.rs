@@ -15,8 +15,8 @@ use crate::{
 };
 
 pub struct SendMoneyService {
-    load_account_port: inject!(LoadAccountPort),
-    update_account_port: inject!(UpdateAccountStatePort),
+    pub load_account_port: inject!(LoadAccountPort),
+    pub update_account_port: inject!(UpdateAccountStatePort),
 }
 
 impl SendMoneyUseCase for SendMoneyService {

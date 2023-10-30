@@ -2,6 +2,7 @@ use super::{
     activity::Activity, activity_window::ActivityWindow, money::Money,
 };
 use chrono::Local;
+use serde::Deserialize;
 
 pub struct Account {
     id: AccountId,
@@ -65,5 +66,5 @@ impl Account {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Deserialize)]
 pub struct AccountId(i64);
