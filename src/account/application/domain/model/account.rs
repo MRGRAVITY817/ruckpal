@@ -11,14 +11,25 @@ pub struct Account {
 }
 
 impl Account {
-    pub fn new(
+    pub fn without_id(
+        baseline_balance: Money,
+        activity_window: ActivityWindow,
+    ) -> Self {
+        Self {
+            id: AccountId::default(),
+            baseline_balance,
+            activity_window,
+        }
+    }
+
+    pub fn with_id(
         id: AccountId,
-        base_line_balance: Money,
+        baseline_balance: Money,
         activity_window: ActivityWindow,
     ) -> Self {
         Self {
             id,
-            baseline_balance: base_line_balance,
+            baseline_balance,
             activity_window,
         }
     }
@@ -43,7 +54,7 @@ impl Account {
         );
         let activity_window = self.activity_window.add_activity(withdrawal);
 
-        Self::new(self.id, self.baseline_balance, activity_window)
+        Self::with_id(self.id, self.baseline_balance, activity_window)
     }
 
     /// Deposit money from source account to current account.
@@ -57,7 +68,7 @@ impl Account {
         );
         let activity_window = self.activity_window.add_activity(deposit);
 
-        Self::new(self.id, self.baseline_balance, activity_window)
+        Self::with_id(self.id, self.baseline_balance, activity_window)
     }
 
     /// Check if account can withdraw the given amount of money.
@@ -66,5 +77,5 @@ impl Account {
     }
 }
 
-#[derive(Clone, Copy, Deserialize)]
+#[derive(Clone, Copy, Deserialize, Default)]
 pub struct AccountId(i64);
