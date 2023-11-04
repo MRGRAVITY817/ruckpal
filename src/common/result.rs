@@ -6,4 +6,6 @@ pub type AppResult<T> = Result<T, AppError>;
 pub enum AppError {
     #[error("database disconnected")]
     DatabaseDisconnected,
+    #[error("invalid field input")]
+    FieldInputInvalid,
 }

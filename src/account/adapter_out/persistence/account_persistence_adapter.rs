@@ -5,7 +5,10 @@ use super::{
 use crate::{
     account::application::{
         domain::model::account::{Account, AccountId},
-        port_out::load_account_port::LoadAccountPort,
+        port_out::{
+            load_account_port::LoadAccountPort,
+            update_account_state_port::UpdateAccountStatePort,
+        },
     },
     common::{result::AppResult, timestamp::Timestamp},
     inject,
@@ -43,5 +46,19 @@ impl LoadAccountPort for AccountPersistenceAdapter {
             withdrawal_balance,
             activities,
         ))
+    }
+}
+
+impl UpdateAccountStatePort for AccountPersistenceAdapter {
+    fn update_activities(&self, account: Account) -> AppResult<()> {
+        let activities = account
+            .activity_window
+            .get_activities()
+            .to_vec()
+            .into_iter()
+            .map(Into::into)
+            .collect::<Vec<_>>();
+
+        self.activity_repo.save_many(activities)
     }
 }

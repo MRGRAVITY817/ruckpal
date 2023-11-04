@@ -22,4 +22,6 @@ pub trait ActivityRepository {
         account_id: AccountId,
         until: Timestamp,
     ) -> AppResult<i64>;
+
+    fn save_many(&self, activities: Vec<ActivityEntity>) -> AppResult<()>;
 }

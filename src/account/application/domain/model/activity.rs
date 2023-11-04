@@ -1,13 +1,15 @@
 use super::{account::AccountId, money::Money};
+use crate::common::timestamp::Timestamp;
 use chrono::{DateTime, Local};
 
+#[derive(Clone, Copy)]
 pub struct Activity {
-    id: ActivityId,
-    owner_account_id: AccountId,
-    source_account_id: AccountId,
-    target_account_id: AccountId,
-    timestamp: DateTime<Local>,
-    money: Money,
+    pub id: ActivityId,
+    pub owner_account_id: AccountId,
+    pub source_account_id: AccountId,
+    pub target_account_id: AccountId,
+    pub timestamp: Timestamp,
+    pub money: Money,
 }
 
 impl Activity {
@@ -30,6 +32,7 @@ impl Activity {
     }
 }
 
+#[derive(Clone, Copy)]
 pub struct ActivityId(pub i64);
 // public class Activity {
 //

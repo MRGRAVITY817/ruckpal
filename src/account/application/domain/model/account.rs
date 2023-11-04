@@ -5,9 +5,9 @@ use chrono::Local;
 use serde::Deserialize;
 
 pub struct Account {
-    id: AccountId,
-    baseline_balance: Money,
-    activity_window: ActivityWindow,
+    pub id: AccountId,
+    pub baseline_balance: Money,
+    pub activity_window: ActivityWindow,
 }
 
 impl Account {

@@ -3,6 +3,10 @@ use super::{account::AccountId, activity::Activity, money::Money};
 pub struct ActivityWindow(pub Vec<Activity>);
 
 impl ActivityWindow {
+    pub fn get_activities(&self) -> &[Activity] {
+        self.0.as_slice()
+    }
+
     pub fn calculate_balance(&self, account_id: AccountId) -> Money {
         Money(0)
     }

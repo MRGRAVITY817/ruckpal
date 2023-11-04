@@ -6,7 +6,7 @@ use crate::account::application::domain::model::{
 };
 
 pub struct AccountEntity {
-    id: EntityId,
+    pub id: EntityId,
 }
 
 impl AccountEntity {

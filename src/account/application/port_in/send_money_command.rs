@@ -3,7 +3,7 @@ use crate::{
         account::AccountId,
         money::{is_money_positive, Money},
     },
-    common::result::AppResult,
+    common::result::{AppError, AppResult},
 };
 use validator::Validate;
 
@@ -30,7 +30,7 @@ impl SendMoneyCommand {
         };
 
         cmd.validate()
-            .or_else(|e| Err(e.into()))
+            .or(Err(AppError::FieldInputInvalid))
             .and_then(|_| Ok(cmd))
     }
 
