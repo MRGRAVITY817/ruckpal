@@ -6,7 +6,7 @@ use serde::Deserialize;
 
 pub struct Account {
     id: AccountId,
-    base_line_balance: Money,
+    baseline_balance: Money,
     activity_window: ActivityWindow,
 }
 
@@ -18,14 +18,14 @@ impl Account {
     ) -> Self {
         Self {
             id,
-            base_line_balance,
+            baseline_balance: base_line_balance,
             activity_window,
         }
     }
 
     /// Calculate the balance of current account.
     pub fn calculate_balance(&self) -> Money {
-        self.base_line_balance + self.activity_window.calculate_balance(self.id)
+        self.baseline_balance + self.activity_window.calculate_balance(self.id)
     }
 
     /// Withdraw money from current account to target account.
@@ -43,7 +43,7 @@ impl Account {
         );
         let activity_window = self.activity_window.add_activity(withdrawal);
 
-        Self::new(self.id, self.base_line_balance, activity_window)
+        Self::new(self.id, self.baseline_balance, activity_window)
     }
 
     /// Deposit money from source account to current account.
@@ -57,7 +57,7 @@ impl Account {
         );
         let activity_window = self.activity_window.add_activity(deposit);
 
-        Self::new(self.id, self.base_line_balance, activity_window)
+        Self::new(self.id, self.baseline_balance, activity_window)
     }
 
     /// Check if account can withdraw the given amount of money.
