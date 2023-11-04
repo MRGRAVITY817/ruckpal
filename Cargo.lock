@@ -1302,6 +1302,7 @@ dependencies = [
  "http",
  "serde",
  "sqlx",
+ "thiserror",
  "tokio",
  "validator",
 ]
