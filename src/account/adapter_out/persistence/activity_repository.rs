@@ -1,24 +1,25 @@
-use {
-    super::account_persistence_adapter::ActivityEntity,
-    crate::{
-        account::application::domain::model::account::AccountId,
-        common::timestamp::Timestamp,
-    },
+use super::activity_entity::ActivityEntity;
+use crate::{
+    account::application::domain::model::account::AccountId,
+    common::{result::AppResult, timestamp::Timestamp},
 };
 
 pub trait ActivityRepository {
     fn find_by_owner_since(
+        &self,
         owner_account_id: AccountId,
         since: Timestamp,
-    ) -> Vec<ActivityEntity>;
+    ) -> AppResult<Vec<ActivityEntity>>;
 
-    fn get_deposit_balance_unit(
-        accound_id: AccountId,
-        until: Timestamp,
-    ) -> Option<i64>;
-
-    fn get_withdrawal_balance_until(
+    fn get_deposit_balance_until(
+        &self,
         account_id: AccountId,
         until: Timestamp,
-    ) -> Option<i64>;
+    ) -> AppResult<i64>;
+
+    fn get_withdrawal_balance_until(
+        &self,
+        account_id: AccountId,
+        until: Timestamp,
+    ) -> AppResult<i64>;
 }

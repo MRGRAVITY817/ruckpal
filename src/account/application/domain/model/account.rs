@@ -78,4 +78,4 @@ impl Account {
 }
 
 #[derive(Clone, Copy, Deserialize, Default)]
-pub struct AccountId(i64);
+pub struct AccountId(pub i64);

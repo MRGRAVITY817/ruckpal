@@ -1,6 +1,6 @@
 use super::{account::AccountId, activity::Activity, money::Money};
 
-pub struct ActivityWindow(Vec<Activity>);
+pub struct ActivityWindow(pub Vec<Activity>);
 
 impl ActivityWindow {
     pub fn calculate_balance(&self, account_id: AccountId) -> Money {

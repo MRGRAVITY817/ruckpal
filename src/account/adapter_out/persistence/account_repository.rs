@@ -1,9 +1,10 @@
-use super::account_persistence_adapter::AccountEntity;
 use crate::{
     account::application::domain::model::account::AccountId,
     common::result::AppResult,
 };
 
+use super::account_entity::AccountEntity;
+
 pub trait AccountRepository {
-    fn find_by_id(id: AccountId) -> AppResult<AccountEntity>;
+    fn find_by_id(&self, id: AccountId) -> AppResult<AccountEntity>;
 }
