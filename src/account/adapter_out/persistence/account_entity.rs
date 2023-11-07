@@ -20,8 +20,8 @@ impl AccountEntity {
         let baseline_balance = Money(deposit_balance - withdrawal_balance);
         let activity_window = ActivityWindow(
             activities
-                .into_iter()
-                .map(ActivityEntity::into_activity)
+                .into_iter() //
+                .map(ActivityEntity::into)
                 .collect(),
         );
 

@@ -17,15 +17,15 @@ pub struct ActivityEntity {
     money: i64,
 }
 
-impl ActivityEntity {
-    pub fn into_activity(self) -> Activity {
+impl From<ActivityEntity> for Activity {
+    fn from(value: ActivityEntity) -> Self {
         Activity {
-            id: ActivityId(self.id),
-            owner_account_id: AccountId(self.owner_account_id),
-            source_account_id: AccountId(self.source_account_id),
-            target_account_id: AccountId(self.target_account_id),
-            timestamp: self.timestamp,
-            money: Money(self.money),
+            id: ActivityId(value.id),
+            owner_account_id: AccountId(value.owner_account_id),
+            source_account_id: AccountId(value.source_account_id),
+            target_account_id: AccountId(value.target_account_id),
+            timestamp: value.timestamp,
+            money: Money(value.money),
         }
     }
 }

@@ -1,5 +1,5 @@
 use super::{
-    account_repository::AccountRepository,
+    account_repository::AccountRepository, activity_entity::ActivityEntity,
     activity_repository::ActivityRepository,
 };
 use crate::{
@@ -51,14 +51,14 @@ impl LoadAccountPort for AccountPersistenceAdapter {
 
 impl UpdateAccountStatePort for AccountPersistenceAdapter {
     fn update_activities(&self, account: Account) -> AppResult<()> {
-        let activities = account
+        let activity_entities = account
             .activity_window
             .get_activities()
             .to_vec()
             .into_iter()
-            .map(Into::into)
-            .collect::<Vec<_>>();
+            .map(ActivityEntity::from)
+            .collect();
 
-        self.activity_repo.save_many(activities)
+        self.activity_repo.save_many(activity_entities)
     }
 }

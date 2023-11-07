@@ -20,6 +20,8 @@ pub struct SendMoneyService {
 }
 
 impl SendMoneyUseCase for SendMoneyService {
+    /// [[Transactional]]
+    /// Send money to other account.
     fn send_money(&self, command: SendMoneyCommand) -> AppResult<()> {
         check_account_exists(command.source_account_id())?;
         check_account_exists(command.target_account_id())?;
