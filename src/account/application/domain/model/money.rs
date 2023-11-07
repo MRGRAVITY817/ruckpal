@@ -2,7 +2,7 @@ use serde::Serialize;
 use std::ops::{Add, Sub};
 use validator::ValidationError;
 
-#[derive(Clone, Copy, Serialize)]
+#[derive(Clone, Copy, Serialize, PartialEq, Debug)]
 pub struct Money(pub i64);
 
 impl Money {

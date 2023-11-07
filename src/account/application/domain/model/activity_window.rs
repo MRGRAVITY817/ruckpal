@@ -1,6 +1,13 @@
 use super::{account::AccountId, activity::Activity, money::Money};
 
+#[derive(Clone)]
 pub struct ActivityWindow(pub Vec<Activity>);
+
+impl Default for ActivityWindow {
+    fn default() -> Self {
+        Self(vec![])
+    }
+}
 
 impl ActivityWindow {
     pub fn get_activities(&self) -> &[Activity] {
