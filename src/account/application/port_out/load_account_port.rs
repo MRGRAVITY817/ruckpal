@@ -3,7 +3,9 @@ use crate::{
     common::result::AppResult,
 };
 use chrono::{DateTime, Local};
+use mockall::automock;
 
+#[automock]
 pub trait LoadAccountPort {
     fn load_account(
         &self,
