@@ -34,3 +34,22 @@ pub fn check_account_exists(account_id: AccountId) -> AppResult<()> {
     // TODO: Implement this correctly
     Ok(())
 }
+
+// #[cfg(test)]
+// mod test {
+//     use crate::account::application::domain::service::send_money_service::SendMoneyService;
+//
+//     #[test]
+//     fn transaction_succeeds() {
+//         // Arrange
+//         let service = SendMoneyService{load_account_port: }
+//
+//
+//         // Act
+//         let result = service.send_money(command);
+//
+//         // Assert
+//         assert!(result.is_ok());
+//         assert!()
+//     }
+// }
