@@ -15,4 +15,6 @@ tokio = { version = "1", features = ["full"] }
 validator = { version = "0.16", features = ["derive"] }
 sqlx = { version = "0.7", features = ["runtime-tokio", "tls-native-tls"] }
 thiserror = "1"
+
+[dev-dependencies]
 mockall = "0.11"
