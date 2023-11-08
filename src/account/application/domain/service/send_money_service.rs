@@ -37,61 +37,53 @@ pub fn check_account_exists(account_id: AccountId) -> AppResult<()> {
 
 #[cfg(test)]
 mod test {
-    use crate::{
-        account::application::{
-            domain::{
-                model::{
-                    account::{Account, AccountId},
-                    activity_window::ActivityWindow,
-                    money::Money,
-                },
-                service::send_money_service::SendMoneyService,
+    use crate::account::application::{
+        domain::{
+            model::{
+                account::{Account, AccountId},
+                activity_window::ActivityWindow,
+                money::Money,
             },
-            port_out::{
-                load_account_port::LoadAccountPort,
-                update_account_state_port::UpdateAccountStatePort,
-            },
+            service::send_money_service::SendMoneyService,
         },
-        common::{result::AppResult, timestamp::Timestamp},
+        port_in::{
+            send_money_command::SendMoneyCommand,
+            send_money_use_case::SendMoneyUseCase,
+        },
+        port_out::{
+            load_account_port::MockLoadAccountPort,
+            update_account_state_port::MockUpdateAccountStatePort,
+        },
     };
 
-    // #[test]
-    // fn transaction_succeeds() {
-    //     // Arrange
-    //     let service = SendMoneyService {
-    //         load_account_port: ,
-    //         update_account_port: ,
-    //     };
-    //
-    //     // Act
-    //     let result = service.send_money(command);
-    //
-    //     // Assert
-    //     assert!(result.is_ok());
-    //     assert!()
-    // }
-    //
-    struct MockLoadAccountPort;
+    #[test]
+    fn transaction_succeeds() {
+        // Arrange
+        let source_account = Account {
+            id: AccountId(1),
+            baseline_balance: Money(1000),
+            activity_window: ActivityWindow::default(),
+        };
+        let target_account = Account {
+            id: AccountId(2),
+            baseline_balance: Money(1000),
+            activity_window: ActivityWindow::default(),
+        };
+        let service = SendMoneyService {
+            load_account_port: Box::new(MockLoadAccountPort::new()),
+            update_account_port: Box::new(MockUpdateAccountStatePort::new()),
+        };
+        let money = Money(500);
+        let command =
+            SendMoneyCommand::new(source_account.id, target_account.id, money)
+                .unwrap();
 
-    impl LoadAccountPort for MockLoadAccountPort {
-        fn load_account(
-            &self,
-            account_id: AccountId,
-            baseline_date: Timestamp,
-        ) -> AppResult<Account> {
-            Ok(Account {
-                id: account_id,
-                baseline_balance: Money(0),
-                activity_window: ActivityWindow::default(),
-            })
-        }
-    }
+        // Act
+        let result = service.send_money(command);
 
-    struct MockUpdateAccountStatePort;
-
-    impl UpdateAccountStatePort for MockUpdateAccountStatePort {
-        fn update_activities(&self, account: Account) -> AppResult<()> {
-            Ok(())
-        }
+        // Assert
+        assert!(result.is_ok());
+        assert_eq!(source_account.calculate_balance(), Money(500));
+        assert_eq!(target_account.calculate_balance(), Money(1500));
     }
 }
